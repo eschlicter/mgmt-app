@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import TasksPage from './components/TasksPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const mockTasks = [
+  {
+    id: 1, 
+    title: 'Some text',
+    description: 'more text',
+    status: 'In Progress'
+  },
+  {
+    id: 2, 
+    title: 'Some more text',
+    description: 'some more text',
+    status: 'In Progress'
+  },
+];
+
+class App extends Component {
+  render() {
+    return (
+      <div className="main-content">
+        <TasksPage tasks={mockTasks} />
+      </div>
+    );
+  }
 }
 
 export default App;
