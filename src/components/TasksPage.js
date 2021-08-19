@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TaskList from './TaskList';
 
-const TASK_STATUSES = ['Unstarted', 'In Progress', 'Completed'];
+import { TASK_STATUSES } from '../constants';
 
 class TasksPage extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class TasksPage extends Component {
     this.state = {
       showNewCardForm: false,
       title: '',
-      description: ''
+      description: '',
     };
   }
 
@@ -25,15 +25,15 @@ class TasksPage extends Component {
     this.setState({
       showNewCardForm: false,
       title: '',
-      description: ''
+      description: '',
     });
   }
 
-  onCreateTasks = e => {
+  onCreateTask = e => {
     e.preventDefault();
     this.props.onCreateTask({
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
     });
     this.resetForm();
   };
@@ -42,30 +42,23 @@ class TasksPage extends Component {
     this.setState({ showNewCardForm: !this.state.showNewCardForm });
   };
 
-  renderTaskLists() {
-    const { tasks } = this.props;
-    return TASK_STATUSES.map(status => {
-      const statusTasks = tasks.filter(task => task.status === status);
-      return (
-        <TaskList
-          key={status}
-          status={status}
-          tasks={statusTasks}
-          onStatusChange={this.props.onStatusChange}
-        />
-      );
-    });
-  }
-
   render() {
+    if (this.props.isLoading) {
+      return (
+        <div className="tasks-loading">
+          Loading...
+        </div>
+      );
+    }
+
     return (
       <div className="tasks">
         <div className="tasks-header">
           <button className="button button-default" onClick={this.toggleForm}>
-            + New Task
+            + New task
           </button>
         </div>
-        {this.state.showNewCardForm && (
+        {this.state.showNewCardForm &&
           <form className="new-task-form" onSubmit={this.onCreateTask}>
             <input
               className="full-width-input"
@@ -84,10 +77,22 @@ class TasksPage extends Component {
             <button className="button" type="submit">
               Save
             </button>
-          </form>
-        )}
-
-        <div className="task-lists">{this.renderTaskLists()}</div>
+          </form>}
+        <div className="task-lists">
+          {TASK_STATUSES.map(status => {
+            const statusTasks = this.props.tasks.filter(
+              task => task.status === status
+            );
+            return (
+              <TaskList
+                key={status}
+                status={status}
+                tasks={statusTasks}
+                onStatusChange={this.props.onStatusChange}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }

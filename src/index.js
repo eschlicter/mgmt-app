@@ -1,41 +1,38 @@
+import registerServiceWorker from './registerServiceWorker';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {createStore, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux'
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import {devToolsEnhancer, composeWithDevTools} from 'redux-devtools-extension';
-import tasks from './reducers';
+import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import tasksReducer from './reducers';
+import App from './App';
 import './index.css';
 
+const rootReducer = (state = {}, action) => {
+  return {
+    tasks: tasksReducer(state.tasks, action),
+  };
+};
+
 const store = createStore(
-  tasks, 
-  composeWithDevTools(applyMiddleware(thunk)) 
-  );
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    
-    
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 
-if (module.hot){
+if (module.hot) {
   module.hot.accept('./App', () => {
     const NextApp = require('./App').default;
     ReactDOM.render(
-      <React.StrictMode>
-        <Provider store={store}>
-          <NextApp />
-        </Provider>
-        
-        
-      </React.StrictMode>,
+      <Provider store={store}><NextApp /></Provider>,
       document.getElementById('root')
     );
   });
@@ -46,7 +43,4 @@ if (module.hot){
   });
 }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+registerServiceWorker();

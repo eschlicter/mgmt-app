@@ -1,22 +1,28 @@
 {
-    "tasks": [
-        {
-            "id": 1,
-            "title": "Sit",
-            "description": "Teach the dog to sit",
-            "status": "Completed"
-        },
-        {
-            "id": 2,
-            "title": "Sit Stay",
-            "description": "Teach the dog to sit and stay",
-            "status": "Unstarted"
-        },
-        {
-            "id": 3,
-            "title": "Sit, Stay, Break",
-            "description": "Teach the dog to sit and stay and break",
-            "status": "Unstarted"
-        }
-    ]
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Sit",
+      "description": "Teach the dog to sit",
+      "status": "Completed"
+    },
+    {
+      "id": 2,
+      "title": "Sit Stay",
+      "description": "Teach the dog to sit and stay",
+      "status": "Completed"
+    },
+    {
+      "id": 3,
+      "title": "Sit, Stay, Break",
+      "description": "Teach the dog to sit and stay and break",
+      "status": "In Progress"
+    },
+    {
+      "title": "new task",
+      "description": "new task description",
+      "status": "In Progress",
+      "id": 4
+    }
+  ]
 }
