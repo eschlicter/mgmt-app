@@ -1,21 +1,6 @@
-import {uniqueId} from '../actions';
 
-const mockTasks = [
-    {
-      id: uniqueId(), 
-      title: 'Some text',
-      description: 'more text',
-      status: 'In Progress'
-    },
-    {
-      id: uniqueId(), 
-      title: 'Some more text',
-      description: 'some more text',
-      status: 'In Progress'
-    },
-  ];
 
-export default function tasks(state = {tasks: mockTasks}, action){
+export default function tasks(state = {tasks: []}, action){
   if(action.type === 'CREATE_TASK'){
     return { tasks: state.tasks.concat(action.payload)};
   }
@@ -28,6 +13,11 @@ export default function tasks(state = {tasks: mockTasks}, action){
         }
         return task;
       })
+    }
+  }
+  if(action.type === 'FETCH_TASKS_SUCCEEDED'){
+    return {
+      tasks: action.payload.tasks
     }
   }
     return state;

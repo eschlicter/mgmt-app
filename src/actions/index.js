@@ -1,3 +1,5 @@
+import * as api from '../api/index';
+
 let _id = 1;
 
 export function uniqueId(){
@@ -26,3 +28,20 @@ export function editTask(id, params={}){
       }
     };
   }
+
+export function fetchTasksSucceeded(tasks){
+  return {
+    type: 'FETCH_TASKS_SUCCEEDED',
+    payload: {
+      tasks
+    }
+  }
+}
+
+export function fetchTasks(){
+  return dispatch => {
+    api.fetchTasks().then(resp => {
+      dispatch(fetchTasksSucceeded(resp.data))
+    })
+  }
+}
